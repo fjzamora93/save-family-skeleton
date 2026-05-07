@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/widgets.dart';
 import 'package:home/src/features/home/domain/entities/child_summary.dart';
 import 'package:home/src/features/home/domain/entities/home_data.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -24,11 +25,14 @@ class HomeController extends _$HomeController {
     }).toList();
 
     final childrenSummaries = await Future.wait(childrenFutures);
+    debugPrint('childrenSummaries: ${childrenSummaries.toString()}');
 
     return HomeData(
       children: childrenSummaries,
       loadedAt: DateTime.now(),
     );
+
+  
   }
 
   Future<void> refresh() async {
