@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:home/src/features/home/domain/entities/home_data.dart';
 import 'package:home/src/features/home/presentation/providers/home_controller.dart';
+import 'package:home/src/features/home/presentation/widgets/child_summary_card.dart';
 import 'package:localizations/localizations.dart';
 import 'package:navigation/navigation.dart';
 import 'package:sf_shared/sf_shared.dart';
@@ -33,7 +34,10 @@ class HomeScreen extends ConsumerWidget {
             skipLoadingOnReload: true,
             loading: () => const Center(child: LoadingIndicator()),
             error: (error, _) => _ErrorView(error: error),
-            data: (data) => _HomeContent(data: data),
+            data: (data) => _HomeContent(
+              data: data,
+              navigationContract: navigationContract,
+            ),
           ),
         ),
       ),
@@ -42,9 +46,13 @@ class HomeScreen extends ConsumerWidget {
 }
 
 class _HomeContent extends ConsumerWidget {
-  const _HomeContent({required this.data});
+  const _HomeContent({
+    required this.data,
+    required this.navigationContract,
+  });
 
   final HomeData data;
+  final NavigationContract navigationContract;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -65,24 +73,19 @@ class _HomeContent extends ConsumerWidget {
             color: theme.colorFor(ThemeCode.textPrimary),
           ),
         ),
-        const SizedBox(height: 8),
-        Text(
-          context.translate(I18n.homeSubtitle),
-          style: TextStyle(
-            fontSize: 15,
-            color: theme.colorFor(ThemeCode.textSecondary),
+        const SizedBox(height: 16),
+        Expanded(
+          child: ListView.builder(
+            itemCount: data.children.length,
+            itemBuilder: (context, index) {
+              final child = data.children[index];
+              return ChildSavingsCard(
+                child: child,
+                onTap: () => navigationContract.goToList(child.id),
+              );
+            },
           ),
         ),
-        const SizedBox(height: 32),
-        Text(
-          '${data.counter}',
-          style: TextStyle(
-            fontSize: 42,
-            fontWeight: FontWeight.w700,
-            color: theme.colorFor(ThemeCode.buttonPrimary),
-          ),
-        ),
-        const Spacer(),
         PrimaryButton(
           label: context.translate(I18n.homeRefresh),
           onPressed: isLoading ? null : controller.refresh,

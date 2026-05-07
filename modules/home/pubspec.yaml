@@ -24,6 +24,8 @@ dependencies:
     path: ../../packages/navigation
   sf_shared:
     path: ../../packages/sf_shared
+  savings_goals:
+    path: ../../modules/savings_goals
 
 dev_dependencies:
   flutter_test:
