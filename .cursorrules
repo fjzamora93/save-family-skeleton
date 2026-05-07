@@ -1,0 +1,22 @@
+# SaveFamily Skeleton - Cursor Rules
+
+1. **NO COMENTARIOS:** Está estrictamente prohibido escribir comentarios en el código. El código debe ser autodocumentado.
+2. **ARQUITECTURA DE CAPAS:** Sigue el patrón: `presentation` (screens/controllers) -> `domain` (entities/interfaces) -> `data` (models/repositories/datasources).
+3. **RIVERPOD 3 CODEGEN:** Usa siempre `@riverpod`. Los controllers deben extender de `_$NombreController`.
+4. **ESTADO ASÍNCRONO:** Usa `FutureOr<T> build()` y maneja mutaciones con `AsyncValue.guard(() async { ... })`.
+5. **FREEZED:** Usa `Freezed` para todas las entidades, DTOs y clases de datos.
+6. **SIN SETSTATE:** Todo el estado de la UI debe vivir en Providers. La única excepción es `TextEditingController`.
+7. **INYECCIÓN DE DEPENDENCIAS:** Usa `GetIt` para contratos de navegación y `Provider` de Riverpod para repositorios y datasources.
+8. **LOCALIZACIÓN:** Prohibido hardcodear strings. Usa siempre `context.translate(I18n.key)`.
+9. **MANEJO DE ERRORES:** Usa `ref.listen` con la extensión `showErrorOn(context)` definida en `sf_shared`.
+10. **DISEÑO SISTEMÁTICO:** Usa exclusivamente widgets y constantes de `packages/design_system`. No hardcodees colores ni espaciados.
+11. **MÓDULO DE REFERENCIA:** Ante la duda, replica exactamente la estructura y lógica de `modules/home/`.
+12. **MAPEO DE DATOS:** Separa `Models` (JSON) de `Entities` (Dominio). Usa extensiones `.toEntity()` y `.toDto()`.
+13. **VALIDACIÓN DE FORMULARIOS:** Crea clases puras `Validator` con métodos estáticos que retornen llaves de `I18n`.
+14. **GOROUTER:** Las rutas deben definirse dentro de `app_router.dart` usando `StatefulShellRoute`.
+15. **PARÁMETROS EN PROVIDERS:** Pasa `childId` o `goalId` como argumentos en el método `build` del provider/controller.
+16. **DATASOURCE MOCK:** Simula latencia con `Future.delayed` y usa `ApiException` para errores de red o lógica.
+17. **ESTILO DART:** Sigue las directrices oficiales de `lints`. Usa `const` siempre que sea posible.
+18. **MOCKTAIL PARA TESTS:** Usa `mocktail` y el helper `makeContainer` para tests unitarios y de controller.
+19. **PULL TO REFRESH:** Implementa siempre estados de carga, error y éxito usando `AsyncValue.when`.
+20. **REGLA DE ORO:** Mantén los módulos desacoplados. No importes archivos de `src` de otros módulos; usa `sf_shared` o exportaciones públicas.

@@ -1,0 +1,10 @@
+# melos_managed_dependency_overrides: design_system,localizations,navigation,sf_shared
+dependency_overrides:
+  design_system:
+    path: ../../packages/design_system
+  localizations:
+    path: ../../packages/localizations
+  navigation:
+    path: ../../packages/navigation
+  sf_shared:
+    path: ../../packages/sf_shared
