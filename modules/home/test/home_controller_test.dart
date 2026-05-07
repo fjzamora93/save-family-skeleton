@@ -5,7 +5,7 @@ import 'package:sf_shared/testing.dart';
 
 void main() {
   group('HomeController', () {
-    test('build resolves with counter 0', () async {
+    test('build resolves with goals for each child', () async {
       final container = makeContainer();
       addTearDown(container.dispose);
 
@@ -14,10 +14,12 @@ void main() {
 
       final data = await container.read(homeControllerProvider.future);
 
-      expect(data.counter, 0);
+      expect(data.children, hasLength(2));
+      expect(data.children[0].goals, hasLength(1));
+      expect(data.children[1].goals, hasLength(1));
     });
 
-    test('refresh increments counter and exposes AsyncData', () async {
+    test('refresh reloads and exposes AsyncData', () async {
       final container = makeContainer();
       addTearDown(container.dispose);
 
@@ -29,7 +31,7 @@ void main() {
 
       final state = container.read(homeControllerProvider);
       expect(state, isA<AsyncData<HomeData>>());
-      expect(state.value?.counter, 1);
+      expect(state.value?.children, hasLength(2));
     });
   });
 }

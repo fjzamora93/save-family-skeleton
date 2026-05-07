@@ -75,7 +75,7 @@ class _HomeContent extends ConsumerWidget {
         ),
         const SizedBox(height: 32),
         Text(
-          '${data.counter}',
+          '${data.children.fold<int>(0, (sum, child) => sum + child.goals.length)}',
           style: TextStyle(
             fontSize: 42,
             fontWeight: FontWeight.w700,
