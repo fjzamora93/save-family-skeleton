@@ -21,6 +21,19 @@ class SavingsGoalsRepositoryImpl implements SavingsGoalsRepository {
   }
 
   @override
+  Future<SavingsGoal> getGoalById(String childId, String goalId) async {
+    final goals = await getGoals(childId);
+    try {
+      return goals.firstWhere((goal) => goal.id == goalId);
+    } catch (_) {
+      throw const ApiException(
+        message: 'Goal not found',
+        statusCode: 404,
+      );
+    }
+  }
+
+  @override
   Future<void> createGoal(String childId, String name, double target, String? desc) async {
     try {
       await _datasource.createGoal(childId, {

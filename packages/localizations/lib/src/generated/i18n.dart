@@ -24,4 +24,26 @@ abstract final class I18n {
   static const String errorValidation = 'errorValidation';
   static const String errorRateLimit = 'errorRateLimit';
   static const String errorConflict = 'errorConflict';
+
+  static const String savingsGoalsTitle = 'savingsGoalsTitle';
+  static const String savingsGoalsEmpty = 'savingsGoalsEmpty';
+  static const String savingsGoalsCreateFirst = 'savingsGoalsCreateFirst';
+  static const String savingsGoalsTargetAmount = 'savingsGoalsTargetAmount';
+  static const String savingsGoalsCurrentAmount = 'savingsGoalsCurrentAmount';
+  static const String savingsGoalsProgress = 'savingsGoalsProgress';
+  static const String savingsGoalCreateTitle = 'savingsGoalCreateTitle';
+  static const String savingsGoalNameLabel = 'savingsGoalNameLabel';
+  static const String savingsGoalTargetAmountLabel = 'savingsGoalTargetAmountLabel';
+  static const String savingsGoalDescriptionLabel = 'savingsGoalDescriptionLabel';
+  static const String savingsGoalCreateSuccess = 'savingsGoalCreateSuccess';
+  static const String savingsGoalValidationNameLength =
+      'savingsGoalValidationNameLength';
+  static const String savingsGoalValidationTargetAmount =
+      'savingsGoalValidationTargetAmount';
+  static const String savingsGoalDetailTitle = 'savingsGoalDetailTitle';
+  static const String savingsGoalContributionLabel = 'savingsGoalContributionLabel';
+  static const String savingsGoalContributionInvalid =
+      'savingsGoalContributionInvalid';
+  static const String savingsGoalReachedTitle = 'savingsGoalReachedTitle';
+  static const String savingsGoalReachedMessage = 'savingsGoalReachedMessage';
 }

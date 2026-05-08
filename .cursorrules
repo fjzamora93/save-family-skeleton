@@ -20,3 +20,4 @@
 18. **MOCKTAIL PARA TESTS:** Usa `mocktail` y el helper `makeContainer` para tests unitarios y de controller.
 19. **PULL TO REFRESH:** Implementa siempre estados de carga, error y éxito usando `AsyncValue.when`.
 20. **REGLA DE ORO:** Mantén los módulos desacoplados. No importes archivos de `src` de otros módulos; usa `sf_shared` o exportaciones públicas.
+21. **ESTILO VAINILLA:**: No uses estilos de ningún tipo en ningún componente ni widget, ni colores, ni tipografías. Cada widget lo escribirás completamente vanilla sin darle ningún estilo.
