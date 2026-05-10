@@ -5,10 +5,13 @@ abstract class NavigationContract {
   void setRouter(GoRouter goRouter);
   void goTo(String path);
   void pushTo(String path, {Object? extra});
-  void goToList(String childId);
-  void goToCreate(String childId);
-  void goToDetail(String childId, String goalId);
   void goBack();
+
+  
+  void navigateToGoalList(String childId);
+  void navigateToNewGoal(String childId);
+  void navigateToGoalDetail(String childId, String goalId);
+
 }
 
 class Navigation implements NavigationContract {
@@ -30,17 +33,17 @@ class Navigation implements NavigationContract {
   }
 
   @override
-  void goToList(String childId) {
+  void navigateToGoalList(String childId) {
     pushTo('${AppRoutes.home}/children/$childId/savings-goals');
   }
 
   @override
-  void goToCreate(String childId) {
+  void navigateToNewGoal(String childId) {
     pushTo('${AppRoutes.home}/children/$childId/savings-goals/new');
   }
 
   @override
-  void goToDetail(String childId, String goalId) {
+  void navigateToGoalDetail(String childId, String goalId) {
     pushTo('${AppRoutes.home}/children/$childId/savings-goals/$goalId');
   }
 

@@ -1,6 +1,7 @@
 import 'package:design_system/src/theme/theme_module.dart';
 import 'package:design_system/src/theme/theme_port.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class SfTextInput extends ConsumerWidget {
@@ -14,6 +15,10 @@ class SfTextInput extends ConsumerWidget {
     this.onChanged,
     this.obscureText = false,
     this.maxLength,
+    this.minLines,
+    this.maxLines,
+    this.textInputAction,
+    this.inputFormatters,
   });
 
   final String label;
@@ -24,6 +29,10 @@ class SfTextInput extends ConsumerWidget {
   final ValueChanged<String>? onChanged;
   final bool obscureText;
   final int? maxLength;
+  final int? minLines;
+  final int? maxLines;
+  final TextInputAction? textInputAction;
+  final List<TextInputFormatter>? inputFormatters;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -47,6 +56,10 @@ class SfTextInput extends ConsumerWidget {
           obscureText: obscureText,
           keyboardType: keyboardType,
           maxLength: maxLength,
+          minLines: minLines,
+          maxLines: maxLines,
+          textInputAction: textInputAction,
+          inputFormatters: inputFormatters,
           decoration: InputDecoration(
             hintText: hintText,
             errorText: errorText,

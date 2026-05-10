@@ -3,6 +3,7 @@
   "homeWelcome": "Welcome",
   "homeSubtitle": "This is the reference module. Use it as a guide for building your feature.",
   "homeRefresh": "Refresh",
+  "homeChildGoalsCount": "{count} goals",
   "activity": "Activity",
   "activityEmpty": "No activity yet",
   "loading": "Loading…",

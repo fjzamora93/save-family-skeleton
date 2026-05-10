@@ -3,6 +3,7 @@ abstract final class I18n {
   static const String homeWelcome = 'homeWelcome';
   static const String homeSubtitle = 'homeSubtitle';
   static const String homeRefresh = 'homeRefresh';
+  static const String homeChildGoalsCount = 'homeChildGoalsCount';
 
   static const String activity = 'activity';
   static const String activityEmpty = 'activityEmpty';

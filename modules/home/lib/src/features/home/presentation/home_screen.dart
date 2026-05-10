@@ -81,7 +81,7 @@ class _HomeContent extends ConsumerWidget {
               final child = data.children[index];
               return ChildSavingsCard(
                 child: child,
-                onTap: () => navigationContract.goToList(child.id),
+                onTap: () => navigationContract.navigateToGoalList(child.id),
               );
             },
           ),

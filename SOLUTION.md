@@ -1,3 +1,24 @@
+# Decisiones tomadas
+
+# Validación de formularios
+
+Se ha desplazado la validación de formularios al 'core' de la feature de 'Saving Goals'. Básicamente, tal y como estaba planteado inicilamente, la validación estaba completamente acoplada a la creación de una meta, ¿pero qué sucede cuando queremos hacer modificaciones parciales cómo solamente el ingreso realizado? En este sentido, se ha optado por que la validación sea algo transversal y no estrictametne acoplado al momento de creación de la meta.
+
+
+
+# PENDIENTES:
+- Los niños están hardcodeados en el controller del home. Crear una capa para obtener los niños de memoria -de un datasource.
+- INVESTIGAR CÓMO ESTOY GESTIONANDO LOS ERRORES: Si se añade un 'goal' que ya existe se lanza un error: Agrega a la lista en memoria. Si el name ya existe → throw ApiException(message: 'Goal name already exists', statusCode: 409). Ese mensaje tiene que llegar tal cual al usuario. 
+- - deleteGoal-goalID - elimina dele stado en memoria.
+Modificar el screen para reemplazar el contador por las cards, usando widgets del design_system.
+Resolver la dependencia entre módulos: Home necesita datos de savings_goals. Pensá cómo exponés eso sin acoplar los módulos directamente — la convención del repo es exponer providers compartidos en un package común (mirá packages/sf_shared/lib/src/... para ver cómo funciona el resto). No hay una respuesta única correcta — lo que evaluamos es tu criterio.
+- Investigar como se está ahciendo la dependencia entre módulos... ¿es la mejor manerao había otras opciones? ENtender qué se está haciendo.
+- EL ChildCard vive resalmente en el Home? jusitificar esta decisión.
+
+# Bgus encontrados
+- Cuando creas una meta no se refresca automaticamente la UI con el listado de goals
+- Cuando creas una meta no se actualiza el home
+
 
 # Generar los freeze
 
