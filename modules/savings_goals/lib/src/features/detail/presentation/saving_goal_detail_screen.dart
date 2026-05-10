@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:localizations/localizations.dart';
 import 'package:navigation/navigation.dart';
-import 'package:savings_goals/src/core/providers/savings_goal_form_state_provider.dart';
 import 'package:savings_goals/src/features/detail/presentation/providers/saving_goal_detail_controller.dart';
+import 'package:savings_goals/src/features/detail/presentation/providers/saving_goal_detail_state_provider.dart';
 import 'package:sf_shared/sf_shared.dart';
 
 class SavingGoalDetailScreen extends ConsumerStatefulWidget {
@@ -47,14 +47,21 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
     );
     final state = ref.watch(detailProvider);
     final controller = ref.read(detailProvider.notifier);
-    final formScope = SavingsGoalFormScopes.detail(widget.childId, widget.goalId);
-    final contributionForm =
-        ref.watch(savingsGoalFormStateControllerProvider(formScope));
-    final contributionFormNotifier =
-        ref.read(savingsGoalFormStateControllerProvider(formScope).notifier);
+    final contributionForm = ref.watch(
+      savingGoalDetailFormStateControllerProvider(
+        widget.childId,
+        widget.goalId,
+      ),
+    );
+    final contributionFormNotifier = ref.read(
+      savingGoalDetailFormStateControllerProvider(
+        widget.childId,
+        widget.goalId,
+      ).notifier,
+    );
 
     ref.listen(detailProvider, (previous, next) async {
-      final previousGoal = previous?.asData?.value;
+      final previousGoal = previous?.value;
       final nextGoal = next.asData?.value;
 
       if (previousGoal != null &&
@@ -127,7 +134,7 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
                 SfNumberInput(
                   label: context.translate(I18n.savingsGoalContributionLabel),
                   controller: _amountController,
-                  onChanged: contributionFormNotifier.updateContributionAmount,
+                  onChanged: (value) => contributionFormNotifier.updateContributionAmount(value),
                   errorText: contributionForm.contributionErrorKey == null
                       ? null
                       : context.translate(contributionForm.contributionErrorKey!),

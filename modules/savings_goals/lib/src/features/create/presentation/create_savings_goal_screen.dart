@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:localizations/localizations.dart';
 import 'package:navigation/navigation.dart';
-import 'package:savings_goals/src/core/providers/savings_goal_form_state_provider.dart';
+import 'package:savings_goals/src/features/create/presentation/providers/create_savings_goal_form_state_provider.dart';
 import 'package:savings_goals/src/features/create/presentation/providers/create_savings_goal_controller.dart';
 import 'package:sf_shared/sf_shared.dart';
 
@@ -46,12 +46,9 @@ class _CreateSavingsGoalScreenState extends ConsumerState<CreateSavingsGoalScree
   @override
   Widget build(BuildContext context) {
     final submitState = ref.watch(createSavingsGoalControllerProvider);
-    final formScope = SavingsGoalFormScopes.create;
-    final formState =
-        ref.watch(savingsGoalFormStateControllerProvider(formScope));
-    final formController = ref.read(
-      savingsGoalFormStateControllerProvider(formScope).notifier,
-    );
+    final formState = ref.watch(createSavingsGoalFormStateControllerProvider);
+    final formController =
+        ref.read(createSavingsGoalFormStateControllerProvider.notifier);
     final submitController = ref.read(createSavingsGoalControllerProvider.notifier);
 
     ref.listen(createSavingsGoalControllerProvider, (previous, next) {
@@ -106,7 +103,7 @@ class _CreateSavingsGoalScreenState extends ConsumerState<CreateSavingsGoalScree
               const Spacer(),
               PrimaryButton(
                 label: context.translate(I18n.save),
-                onPressed: formState.isValidCreate && !submitState.isLoading
+                onPressed: formState.isValid && !submitState.isLoading
                     ? () => submitController.submit(widget.childId)
                     : null,
                 isLoading: submitState.isLoading,
