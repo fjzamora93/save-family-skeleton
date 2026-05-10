@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:home/src/features/home/domain/entities/child_summary.dart';
+import 'package:localizations/localizations.dart';
 
 class ChildSavingsCard extends StatelessWidget {
   final ChildSummary child;
@@ -13,7 +14,7 @@ class ChildSavingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+ 
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
@@ -27,15 +28,26 @@ class ChildSavingsCard extends StatelessWidget {
           children: [
             const SizedBox(height: 4),
             Text(
-              '${child.goals.length} metas · €${child.goals.fold<double>(0, (sum, goal) => sum + goal.targetAmount)} / €${child.goals.fold<double>(0, (sum, goal) => sum + goal.targetAmount)}',
+              context.translate(
+                I18n.homeChildGoalsCount,
+                args: {'count': '${child.goals.length}'},
+              ),
             ),
-            const SizedBox(height: 8),
-            LinearProgressIndicator(
-              value: child.goals.isNotEmpty && child.goals.any((goal) => goal.targetAmount > 0)
-                ? child.goals.fold(0.0, (sum, goal) => sum + goal.currentAmount) / child.goals.fold(0.0, (sum, goal) => sum + goal.targetAmount) 
-                : 0,
+        
+            Text(
+              context.translate(
+                I18n.savingsGoalsTargetAmount,
+                args: {'amount': child.targetStr},
+              ),
+            ),
+            Text(
+              context.translate(
+                I18n.savingsGoalsCurrentAmount,
+                args: {'amount': child.currentStr},
+              ),
             ),
           ],
+          
         ),
         trailing: const Icon(Icons.chevron_right),
       ),

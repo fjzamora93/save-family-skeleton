@@ -17,4 +17,17 @@ class SavingsGoalFormValidator {
     }
     return null;
   }
+
+  static String? validateContribution(String value) {
+    final trimmed = value.trim();
+    if (trimmed.isEmpty) {
+      return null;
+    }
+    final normalized = trimmed.replaceAll(',', '.');
+    final amount = double.tryParse(normalized);
+    if (amount == null || amount <= 0) {
+      return I18n.savingsGoalContributionInvalid;
+    }
+    return null;
+  }
 }

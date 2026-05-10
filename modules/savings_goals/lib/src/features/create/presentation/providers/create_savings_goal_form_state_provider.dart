@@ -1,31 +1,8 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:savings_goals/src/features/create/presentation/validators/savings_goal_form_validator.dart';
+import 'package:savings_goals/src/core/domain/validator/savings_goal_form_validator.dart';
+import 'package:savings_goals/src/features/create/presentation/state/create_savings_goal_form_state.dart';
 
-part 'create_savings_goal_form_state_provider.freezed.dart';
 part 'create_savings_goal_form_state_provider.g.dart';
-
-@freezed
-sealed class CreateSavingsGoalFormState with _$CreateSavingsGoalFormState {
-  const factory CreateSavingsGoalFormState({
-    required String name,
-    required String targetAmount,
-    required String description,
-    String? nameErrorKey,
-    String? targetAmountErrorKey,
-  }) = _CreateSavingsGoalFormState;
-
-  const CreateSavingsGoalFormState._();
-
-  double? get parsedTargetAmount =>
-      double.tryParse(targetAmount.trim().replaceAll(',', '.'));
-
-  bool get isValid =>
-      nameErrorKey == null &&
-      targetAmountErrorKey == null &&
-      name.trim().isNotEmpty &&
-      parsedTargetAmount != null;
-}
 
 @riverpod
 class CreateSavingsGoalFormStateController
@@ -49,7 +26,8 @@ class CreateSavingsGoalFormStateController
   void updateTargetAmount(String value) {
     state = state.copyWith(
       targetAmount: value,
-      targetAmountErrorKey: SavingsGoalFormValidator.validateTargetAmount(value),
+      targetAmountErrorKey:
+          SavingsGoalFormValidator.validateTargetAmount(value),
     );
   }
 

@@ -3,6 +3,7 @@
   "homeWelcome": "Welcome",
   "homeSubtitle": "This is the reference module. Use it as a guide for building your feature.",
   "homeRefresh": "Refresh",
+  "homeChildGoalsCount": "{count} goals",
   "activity": "Activity",
   "activityEmpty": "No activity yet",
   "loading": "Loading…",
@@ -21,6 +22,7 @@
   "errorValidation": "The information provided is not valid.",
   "errorRateLimit": "Too many attempts. Please wait a moment and try again.",
   "errorConflict": "There's a conflict with the current state.",
+  "errorSavingsGoalTargetReached": "This goal is already complete. You can't add more contributions.",
   "savingsGoalsTitle": "Savings goals",
   "savingsGoalsEmpty": "There are no savings goals yet",
   "savingsGoalsCreateFirst": "Create first goal",
@@ -36,7 +38,8 @@
   "savingsGoalValidationTargetAmount": "The amount must be greater than 0 and less than or equal to 10000",
   "savingsGoalDetailTitle": "Goal detail",
   "savingsGoalContributionLabel": "Contribution",
-  "savingsGoalContributionInvalid": "Enter a positive amount",
+  "savingsGoalContributionInvalid": "Enter a valid amount greater than zero",
+  "savingsGoalContributionExceedsLimit": "The contribution amount cannot exceed the remaining amount",
   "savingsGoalReachedTitle": "Goal reached!",
   "savingsGoalReachedMessage": "You completed this savings goal"
 }

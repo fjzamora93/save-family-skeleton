@@ -4,3 +4,4 @@ export 'src/theme/theme_port.dart';
 export 'src/widgets/loading_indicator.dart';
 export 'src/widgets/primary_button.dart';
 export 'src/widgets/text_input.dart';
+export 'src/widgets/number_input.dart';

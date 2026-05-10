@@ -3,6 +3,7 @@ import 'package:savings_goals/src/core/data/datasource/saving_goals_remote_datas
 import 'package:savings_goals/src/core/data/datasource/saving_goals_remote_datasource_impl.dart';
 import 'package:savings_goals/src/core/data/repositories/saving_goals_repository_impl.dart';
 import 'package:savings_goals/src/core/domain/repositories/saving_goals_repository.dart';
+import 'package:savings_goals/src/core/domain/usecases/savings_goal_use_cases.dart';
 part 'core_providers.g.dart';
 
 
@@ -17,4 +18,10 @@ SavingsGoalsRemoteDatasource savingsGoalsDatasource(Ref ref) {
 SavingsGoalsRepository savingsGoalsRepository(Ref ref) {
   final datasource = ref.watch(savingsGoalsDatasourceProvider);
   return SavingsGoalsRepositoryImpl(datasource);
+}
+
+@riverpod
+SavingsGoalUseCases savingsGoalUseCases(Ref ref) {
+  final repository = ref.watch(savingsGoalsRepositoryProvider);
+  return SavingsGoalUseCases(repository: repository);
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:localizations/localizations.dart';
 import 'package:navigation/navigation.dart';
-import 'package:savings_goals/src/core/domain/entities/savings_goal.dart';
 import 'package:savings_goals/src/features/detail/presentation/providers/saving_goal_detail_controller.dart';
+import 'package:savings_goals/src/features/detail/presentation/providers/saving_goal_detail_state_provider.dart';
 import 'package:sf_shared/sf_shared.dart';
 
 class SavingGoalDetailScreen extends ConsumerStatefulWidget {
@@ -26,7 +26,6 @@ class SavingGoalDetailScreen extends ConsumerStatefulWidget {
 
 class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen> {
   late final TextEditingController _amountController;
-  SavingsGoal? _lastResolvedGoal;
 
   @override
   void initState() {
@@ -40,49 +39,50 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
     super.dispose();
   }
 
-  double? get _parsedAmount {
-    final value = _amountController.text.trim().replaceAll(',', '.');
-    final amount = double.tryParse(value);
-    if (amount == null || amount <= 0) {
-      return null;
-    }
-    return amount;
-  }
-
   @override
   Widget build(BuildContext context) {
-    final provider = savingsGoalDetailControllerProvider(
+    final detailProvider = savingsGoalDetailControllerProvider(
       widget.childId,
       widget.goalId,
     );
-    final state = ref.watch(provider);
-    final controller = ref.read(provider.notifier);
+    final state = ref.watch(detailProvider);
+    final controller = ref.read(detailProvider.notifier);
+    final contributionForm = ref.watch(
+      savingGoalDetailFormStateControllerProvider(
+        widget.childId,
+        widget.goalId,
+      ),
+    );
+    final contributionFormNotifier = ref.read(
+      savingGoalDetailFormStateControllerProvider(
+        widget.childId,
+        widget.goalId,
+      ).notifier,
+    );
 
-    ref.listen(provider, (previous, next) async {
-      final previousGoal = previous?.asData?.value ?? _lastResolvedGoal;
+    ref.listen(detailProvider, (previous, next) async {
+      final previousGoal = previous?.value;
       final nextGoal = next.asData?.value;
 
-      if (nextGoal != null) {
-        final completedBefore = previousGoal?.isCompleted ?? false;
-        final completedNow = nextGoal.isCompleted;
-        if (!completedBefore && completedNow) {
-          await showDialog<void>(
-            context: context,
-            builder: (context) {
-              return AlertDialog(
-                title: Text(context.translate(I18n.savingsGoalReachedTitle)),
-                content: Text(context.translate(I18n.savingsGoalReachedMessage)),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text(context.translate(I18n.confirm)),
-                  ),
-                ],
-              );
-            },
-          );
-        }
-        _lastResolvedGoal = nextGoal;
+      if (previousGoal != null &&
+          nextGoal != null &&
+          !previousGoal.isCompleted &&
+          nextGoal.isCompleted) {
+        await showDialog<void>(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text(context.translate(I18n.savingsGoalReachedTitle)),
+              content: Text(context.translate(I18n.savingsGoalReachedMessage)),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child: Text(context.translate(I18n.confirm)),
+                ),
+              ],
+            );
+          },
+        );
       }
 
       await next.showErrorOn(context);
@@ -93,16 +93,17 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: state.when(
+          skipLoadingOnReload: true,
           loading: () => const Center(child: LoadingIndicator()),
           error: (error, _) => Center(
             child: PrimaryButton(
               label: context.translate(I18n.retry),
-              onPressed: () => ref.invalidate(provider),
+              onPressed: () => ref.invalidate(detailProvider),
             ),
           ),
           data: (goal) {
-            final progress = goal.progress.clamp(0.0, 1.0);
-            final parsedAmount = _parsedAmount;
+            final progress = goal.progressPercent;
+            final parsedContribution = contributionForm.parsedContributionAmount;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -130,26 +131,25 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
                   ),
                 ),
                 const SizedBox(height: 24),
-                TextField(
+                SfNumberInput(
+                  label: context.translate(I18n.savingsGoalContributionLabel),
                   controller: _amountController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
-                  onChanged: (_) => setState(() {}),
-                  decoration: InputDecoration(
-                    labelText: context.translate(I18n.savingsGoalContributionLabel),
-                    errorText: _amountController.text.isEmpty || parsedAmount != null
-                        ? null
-                        : context.translate(I18n.savingsGoalContributionInvalid),
-                  ),
+                  onChanged: (value) => contributionFormNotifier.updateContributionAmount(value),
+                  errorText: contributionForm.contributionErrorKey == null
+                      ? null
+                      : context.translate(contributionForm.contributionErrorKey!),
                 ),
                 const Spacer(),
                 PrimaryButton(
                   label: context.translate(I18n.confirm),
                   isLoading: state.isLoading,
-                  onPressed: parsedAmount == null || state.isLoading
+                  onPressed: parsedContribution == null || state.isLoading
                       ? null
-                      : () => controller.addContribution(parsedAmount),
+                      : () async {
+                        await controller.addContribution(parsedContribution);
+                        _amountController.clear(); 
+                        contributionFormNotifier.updateContributionAmount('');
+                  },
                 ),
               ],
             );
