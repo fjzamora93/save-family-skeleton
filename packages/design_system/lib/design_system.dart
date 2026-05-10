@@ -1,3 +1,5 @@
+export 'src/theme/material_theme.dart';
+export 'src/theme/sf_typography.dart';
 export 'src/theme/theme_adapter.dart';
 export 'src/theme/theme_module.dart';
 export 'src/theme/theme_port.dart';

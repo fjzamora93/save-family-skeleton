@@ -1,3 +1,4 @@
+import 'package:design_system/design_system.dart';
 import 'package:flutter/material.dart';
 import 'package:home/src/features/home/domain/entities/child_summary.dart';
 import 'package:localizations/localizations.dart';
@@ -14,14 +15,13 @@ class ChildSavingsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
- 
-
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ListTile(
         onTap: onTap,
         title: Text(
           child.name,
+          style: SfTypography.titleSmall(context),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

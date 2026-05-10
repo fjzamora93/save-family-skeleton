@@ -13,5 +13,7 @@ class ThemeAdapter extends ThemePort {
         ThemeCode.border: Color(0xFFE2E4ED),
         ThemeCode.error: Color(0xFFE5484D),
         ThemeCode.success: Color(0xFF2EBD85),
+        ThemeCode.cardSurface: Color(0xFFFFE4DC),
+        ThemeCode.cardShadow: Color(0x1A1A1B2E),
       };
 }
