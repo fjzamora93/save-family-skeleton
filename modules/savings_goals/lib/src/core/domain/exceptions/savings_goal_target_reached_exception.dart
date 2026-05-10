@@ -2,7 +2,7 @@ import 'package:localizations/localizations.dart';
 import 'package:sf_shared/sf_shared.dart';
 
 class SavingsGoalTargetReachedException
-    implements UserFacingApplicationException {
+    implements DomainException {
   const SavingsGoalTargetReachedException({
     required this.message,
   });

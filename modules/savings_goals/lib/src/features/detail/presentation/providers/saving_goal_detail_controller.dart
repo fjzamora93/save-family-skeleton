@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:savings_goals/src/core/domain/entities/savings_goal.dart';
-import 'package:savings_goals/src/core/domain/exceptions/savings_goal_target_reached_exception.dart';
 import 'package:savings_goals/src/core/domain/usecases/savings_goal_use_cases.dart';
 import 'package:savings_goals/src/core/providers/core_providers.dart';
+import 'package:sf_shared/sf_shared.dart';
 
 part 'saving_goal_detail_controller.g.dart';
 
@@ -35,7 +35,7 @@ class SavingsGoalDetailController extends _$SavingsGoalDetailController {
         contributionAmount: amount,
       );
     });
-    if (state.hasError && state.error is SavingsGoalTargetReachedException) {
+    if (state.hasError && state.error is DomainException) {
       final recovered = previousGoal;
       Future<void>.delayed(Duration.zero, () {
         if (!ref.mounted) {
