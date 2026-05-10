@@ -6,20 +6,21 @@ Para la validación de formularios se ha dividido por un lado lo que es el 'esta
 
 ## Casos de uso
 
-Aunque en esta prueba todas las validaciones que se han hecho son semánticas (que tenga ciertos caracteres o cierto valor límite, por ejemplo), se han añadido validaciones propias de la lógica de negocio. Para ello, se ha creado una capa intermedia llamada 'UseCase'.
+Aunque en esta prueba todas las validaciones que se han hecho son semánticas (que tenga ciertos caracteres o cierto valor límite, por ejemplo), se han añadido validaciones propias de la lógica de negocio. Para ello, se ha creado una capa intermedia llamada 'UseCase' que es la que se ocuparía de la lógica de negocio más compleja.
+
+## Excepciones del domain
+
+Al igual que puede haber excepciones del backend, se están contemplando excepciones de la capa de Domain. En este caso, y por simplificidad, se propagan de la misma manera que los errores que vienen del backend. Aunque idealmente deberían manejarse de una forma distinta (no es lo mismo un fallo de la Api que uno donde simplemente no se cumplen las reglas de negocio y se puede informar al usuario inmediatamente de lo que sucede).
+
+
+## Llamadas a base de datos
+
+Para mantener el código limpio, se están haciendo llamadas recurrentes al backend y se están invalidando constantemente los controladores. Esto, en un caso real, tiene un coste económico que debe ser evaluado, pues cuando se trabaja con miles de registros simultáneamente, hacer una invalidación es una operación demasiado costosa.
 
 
 
 
 
-# PENDIENTES:
-- Los niños están hardcodeados en el controller del home. Crear una capa para obtener los niños de memoria -de un datasource.
-- INVESTIGAR CÓMO ESTOY GESTIONANDO LOS ERRORES: Si se añade un 'goal' que ya existe se lanza un error: Agrega a la lista en memoria. Si el name ya existe → throw ApiException(message: 'Goal name already exists', statusCode: 409). Ese mensaje tiene que llegar tal cual al usuario. 
-- - deleteGoal-goalID - elimina dele stado en memoria.
-Modificar el screen para reemplazar el contador por las cards, usando widgets del design_system.
-Resolver la dependencia entre módulos: Home necesita datos de savings_goals. Pensá cómo exponés eso sin acoplar los módulos directamente — la convención del repo es exponer providers compartidos en un package común (mirá packages/sf_shared/lib/src/... para ver cómo funciona el resto). No hay una respuesta única correcta — lo que evaluamos es tu criterio.
-- Investigar como se está ahciendo la dependencia entre módulos... ¿es la mejor manerao había otras opciones? ENtender qué se está haciendo.
-- EL ChildCard vive resalmente en el Home? jusitificar esta decisión.
 
 # Bgus encontrados
 - Cuando creas una meta no se refresca automaticamente la UI con el listado de goals
