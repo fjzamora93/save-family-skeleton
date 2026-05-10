@@ -15,17 +15,20 @@ class SavingsGoalDetailController extends _$SavingsGoalDetailController {
   }
 
   Future<void> addContribution(double amount) async {
-    final previous = state.asData?.value;
-    if (previous == null || amount <= 0) {
+    if (state.isLoading || amount <= 0) {
       return;
     }
+    final previousGoal = state.asData?.value;
+    if (previousGoal == null) {
+      return;
+    }
+    final updatedAmount = previousGoal.currentAmount + amount;
 
-    state = const AsyncLoading();
+    state = const AsyncLoading<SavingsGoal>();
     state = await AsyncValue.guard(() async {
       final repository = ref.read(savingsGoalsRepositoryProvider);
-      final updatedAmount = previous.currentAmount + amount;
       await repository.updateProgress(goalId, updatedAmount);
-      return previous.copyWith(currentAmount: updatedAmount);
+      return previousGoal.copyWith(currentAmount: updatedAmount);
     });
   }
 }

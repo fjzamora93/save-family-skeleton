@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:localizations/localizations.dart';
 import 'package:navigation/navigation.dart';
-import 'package:savings_goals/src/features/create/presentation/decimal_amount_input_formatter.dart';
 import 'package:savings_goals/src/core/providers/savings_goal_form_state_provider.dart';
 import 'package:savings_goals/src/features/create/presentation/providers/create_savings_goal_controller.dart';
 import 'package:sf_shared/sf_shared.dart';
@@ -87,13 +86,11 @@ class _CreateSavingsGoalScreenState extends ConsumerState<CreateSavingsGoalScree
                     : context.translate(formState.nameErrorKey!),
               ),
               const SizedBox(height: 16),
-              SfTextInput(
+              SfNumberInput(
                 label: context.translate(I18n.savingsGoalTargetAmountLabel),
                 controller: _targetAmountController,
                 onChanged: formController.updateTargetAmount,
-                keyboardType: const TextInputType.numberWithOptions(decimal: true),
                 textInputAction: TextInputAction.next,
-                inputFormatters: const [DecimalAmountInputFormatter()],
                 errorText: formState.targetAmountErrorKey == null
                     ? null
                     : context.translate(formState.targetAmountErrorKey!),

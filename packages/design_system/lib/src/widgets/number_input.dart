@@ -4,33 +4,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SfTextInput extends ConsumerWidget {
-  const SfTextInput({
+class SfNumberInput extends ConsumerWidget {
+  const SfNumberInput({
     super.key,
     required this.label,
     this.controller,
     this.errorText,
     this.hintText,
-    this.keyboardType,
-    this.onChanged,
-    this.obscureText = false,
-    this.maxLength,
-    this.minLines,
-    this.maxLines,
     this.textInputAction,
+    this.onChanged,
   });
 
   final String label;
   final TextEditingController? controller;
   final String? errorText;
   final String? hintText;
-  final TextInputType? keyboardType;
-  final ValueChanged<String>? onChanged;
-  final bool obscureText;
-  final int? maxLength;
-  final int? minLines;
-  final int? maxLines;
   final TextInputAction? textInputAction;
+  final ValueChanged<String>? onChanged;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -51,12 +41,9 @@ class SfTextInput extends ConsumerWidget {
         TextField(
           controller: controller,
           onChanged: onChanged,
-          obscureText: obscureText,
-          keyboardType: keyboardType,
-          maxLength: maxLength,
-          minLines: minLines,
-          maxLines: maxLines,
+          keyboardType: const TextInputType.numberWithOptions(decimal: true),
           textInputAction: textInputAction,
+          inputFormatters: const [_DigitsOnlyDecimalFormatter()],
           decoration: InputDecoration(
             hintText: hintText,
             errorText: errorText,
@@ -85,5 +72,21 @@ class SfTextInput extends ConsumerWidget {
         ),
       ],
     );
+  }
+}
+
+class _DigitsOnlyDecimalFormatter extends TextInputFormatter {
+  const _DigitsOnlyDecimalFormatter();
+
+  static final RegExp _pattern = RegExp(r'^[0-9]*[.,]?[0-9]*$');
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    if (newValue.text.isEmpty) return newValue;
+    if (_pattern.hasMatch(newValue.text)) return newValue;
+    return oldValue;
   }
 }

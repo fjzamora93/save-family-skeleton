@@ -37,7 +37,7 @@
   "savingsGoalValidationTargetAmount": "El monto debe ser mayor a 0 y menor o igual a 10000",
   "savingsGoalDetailTitle": "Detalle de objetivo",
   "savingsGoalContributionLabel": "Aporte",
-  "savingsGoalContributionInvalid": "Ingresa un monto positivo",
+  "savingsGoalContributionInvalid": "Ingresá un importe válido mayor a cero",
   "savingsGoalReachedTitle": "¡Meta alcanzada!",
   "savingsGoalReachedMessage": "Has completado este objetivo de ahorro"
 }

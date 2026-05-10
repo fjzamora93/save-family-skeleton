@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:localizations/localizations.dart';
 import 'package:navigation/navigation.dart';
 import 'package:savings_goals/src/core/providers/savings_goal_form_state_provider.dart';
-import 'package:savings_goals/src/features/create/presentation/decimal_amount_input_formatter.dart';
 import 'package:savings_goals/src/features/detail/presentation/providers/saving_goal_detail_controller.dart';
 import 'package:sf_shared/sf_shared.dart';
 
@@ -32,7 +31,6 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
   void initState() {
     super.initState();
     _amountController = TextEditingController();
-    _amountController.text = '0.00';
   }
 
   @override
@@ -88,6 +86,7 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: state.when(
+          skipLoadingOnReload: true,
           loading: () => const Center(child: LoadingIndicator()),
           error: (error, _) => Center(
             child: PrimaryButton(
@@ -125,14 +124,10 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
                   ),
                 ),
                 const SizedBox(height: 24),
-                SfTextInput(
+                SfNumberInput(
                   label: context.translate(I18n.savingsGoalContributionLabel),
                   controller: _amountController,
-                  keyboardType: const TextInputType.numberWithOptions(
-                    decimal: true,
-                  ),
                   onChanged: contributionFormNotifier.updateContributionAmount,
-                  inputFormatters: const [DecimalAmountInputFormatter()],
                   errorText: contributionForm.contributionErrorKey == null
                       ? null
                       : context.translate(contributionForm.contributionErrorKey!),
@@ -146,7 +141,7 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
                       : () async {
                         await controller.addContribution(parsedContribution);
                         _amountController.clear(); 
-                        contributionFormNotifier.updateContributionAmount(''); 
+                        contributionFormNotifier.updateContributionAmount('');
                   },
                 ),
               ],
