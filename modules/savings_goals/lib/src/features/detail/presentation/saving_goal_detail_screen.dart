@@ -101,7 +101,7 @@ class _SavingGoalDetailScreenState extends ConsumerState<SavingGoalDetailScreen>
             ),
           ),
           data: (goal) {
-            final progress = goal.progress.clamp(0.0, 1.0);
+            final progress = goal.progressPercent;
             final parsedAmount = _parsedAmount;
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
