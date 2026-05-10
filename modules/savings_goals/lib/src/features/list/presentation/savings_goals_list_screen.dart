@@ -26,6 +26,8 @@ class SavingsGoalsListScreen extends ConsumerWidget {
       savingsGoalsListControllerProvider(childId).notifier,
     );
 
+    void navigateToNewGoal() => navigationContract.navigateToNewGoal(childId);
+
     ref.listen(
       savingsGoalsListControllerProvider(childId),
       (_, next) => next.showErrorOn(context),
@@ -42,19 +44,19 @@ class SavingsGoalsListScreen extends ConsumerWidget {
         ),
         data: (goals) => goals.isEmpty
             ? SavingsGoalsEmptyView(
-                onCreate: () => navigationContract.goToCreate(childId),
+                onCreate: navigateToNewGoal,
               )
             : SavingsGoalsListView(
                 goals: goals,
                 onRefresh: controller.refresh,
                 onGoalTap: (goal) =>
-                    navigationContract.goToDetail(childId, goal.id),
+                    navigationContract.navigateToGoalDetail(childId, goal.id),
                 onGoalDelete: (goal) => controller.deleteGoal(goal.id),
               ),
       ),
       floatingActionButton: state.maybeWhen(
         data: (_) => FloatingActionButton(
-          onPressed: () => navigationContract.goToCreate(childId),
+          onPressed: navigateToNewGoal,
           child: const Icon(Icons.add),
         ),
         orElse: () => null, 
