@@ -10,6 +10,8 @@ enum ThemeCode {
   border,
   error,
   success,
+  cardSurface,
+  cardShadow,
 }
 
 abstract class ThemePort {
