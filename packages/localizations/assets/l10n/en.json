@@ -22,6 +22,7 @@
   "errorValidation": "The information provided is not valid.",
   "errorRateLimit": "Too many attempts. Please wait a moment and try again.",
   "errorConflict": "There's a conflict with the current state.",
+  "errorSavingsGoalTargetReached": "This goal is already complete. You can't add more contributions.",
   "savingsGoalsTitle": "Savings goals",
   "savingsGoalsEmpty": "There are no savings goals yet",
   "savingsGoalsCreateFirst": "Create first goal",
@@ -38,6 +39,7 @@
   "savingsGoalDetailTitle": "Goal detail",
   "savingsGoalContributionLabel": "Contribution",
   "savingsGoalContributionInvalid": "Enter a valid amount greater than zero",
+  "savingsGoalContributionExceedsLimit": "The contribution amount cannot exceed the remaining amount",
   "savingsGoalReachedTitle": "Goal reached!",
   "savingsGoalReachedMessage": "You completed this savings goal"
 }

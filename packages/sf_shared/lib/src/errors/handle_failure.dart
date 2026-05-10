@@ -4,6 +4,7 @@ import 'package:localizations/localizations.dart';
 import 'api_exception.dart';
 import 'error_dialogs.dart';
 import 'failure_type.dart';
+import 'domain_exception.dart';
 
 bool _dialogOpen = false;
 
@@ -37,6 +38,11 @@ Future<void> handleFailure({
       case FailureType.conflict:
         final raw = error is ApiException ? error.message : null;
         await showErrorDialog(context, I18n.errorConflict, rawMessage: raw);
+      case FailureType.userFacingDomain:
+        final key = error is DomainException
+            ? error.localizationKey
+            : I18n.errorTechnical;
+        await showErrorDialog(context, key);
     }
   } finally {
     _dialogOpen = false;

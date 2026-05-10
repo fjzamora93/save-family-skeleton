@@ -25,6 +25,8 @@ abstract final class I18n {
   static const String errorValidation = 'errorValidation';
   static const String errorRateLimit = 'errorRateLimit';
   static const String errorConflict = 'errorConflict';
+  static const String errorSavingsGoalTargetReached =
+      'errorSavingsGoalTargetReached';
 
   static const String savingsGoalsTitle = 'savingsGoalsTitle';
   static const String savingsGoalsEmpty = 'savingsGoalsEmpty';
@@ -45,6 +47,7 @@ abstract final class I18n {
   static const String savingsGoalContributionLabel = 'savingsGoalContributionLabel';
   static const String savingsGoalContributionInvalid =
       'savingsGoalContributionInvalid';
+  static const String savingsGoalContributionExceedsLimit = 'savingsGoalContributionExceedsLimit';
   static const String savingsGoalReachedTitle = 'savingsGoalReachedTitle';
   static const String savingsGoalReachedMessage = 'savingsGoalReachedMessage';
 }

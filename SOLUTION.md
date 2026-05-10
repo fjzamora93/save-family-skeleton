@@ -1,8 +1,14 @@
 # Decisiones tomadas
 
-# Validación de formularios
+## Validación de formularios
 
-Se ha desplazado la validación de formularios al 'core' de la feature de 'Saving Goals'. Básicamente, tal y como estaba planteado inicilamente, la validación estaba completamente acoplada a la creación de una meta, ¿pero qué sucede cuando queremos hacer modificaciones parciales cómo solamente el ingreso realizado? En este sentido, se ha optado por que la validación sea algo transversal y no estrictametne acoplado al momento de creación de la meta.
+Para la validación de formularios se ha dividido por un lado lo que es el 'estado' propio del formulario (para ello se ha creado el directorio presentation/state), y por otro lado el controlador que va a hacer la llamada al validator. De esta manera queda desacoplado y tenemos opción a hacer crecer el formulario con nuevos campos cuando sea necesario
+
+## Casos de uso
+
+Aunque en esta prueba todas las validaciones que se han hecho son semánticas (que tenga ciertos caracteres o cierto valor límite, por ejemplo), se han añadido validaciones propias de la lógica de negocio. Para ello, se ha creado una capa intermedia llamada 'UseCase'.
+
+
 
 
 

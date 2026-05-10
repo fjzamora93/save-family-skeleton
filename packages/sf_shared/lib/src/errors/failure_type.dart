@@ -1,4 +1,5 @@
 import 'api_exception.dart';
+import 'domain_exception.dart';
 
 enum FailureType {
   connection,
@@ -8,9 +9,13 @@ enum FailureType {
   notFound,
   conflict,
   rateLimit,
+  userFacingDomain,
   other;
 
   static FailureType fromException(Object? exception) {
+    if (exception is DomainException) {
+      return FailureType.userFacingDomain;
+    }
     if (exception is ApiException) {
       if (exception.isNetworkError) return FailureType.connection;
       final status = exception.statusCode;
